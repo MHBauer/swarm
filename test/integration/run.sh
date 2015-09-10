@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-THIS_SCRIPT=$(readlink -f "$BASH_SOURCE")
+THIS_SCRIPT=$(greadlink -f "$BASH_SOURCE" || readlink -q -f "$BASH_SOURCE")
+echo ${THIS_SCRIPT}
 cd "$(dirname "${THIS_SCRIPT}")"
 
 # Root directory of Swarm.
