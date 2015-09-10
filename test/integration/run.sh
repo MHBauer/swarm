@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-THIS_SCRIPT=$(greadlink -f "$BASH_SOURCE" || readlink -q -f "$BASH_SOURCE")
+READLINK_LOCATION=$(which greadlink readlink | head -n 1)
+THIS_SCRIPT=$(${READLINK_LOCATION} -f "$BASH_SOURCE")
 echo ${THIS_SCRIPT}
 cd "$(dirname "${THIS_SCRIPT}")"
 
