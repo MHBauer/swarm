@@ -6,6 +6,9 @@ go:
 # let us have speedy Docker-based Travis workers
 sudo: false
 
+before_install:
+  - pip install --user codecov
+
 install:
   # Symlink below is needed for Travis CI to work correctly on personal forks of swarm
   - ln -s $HOME/gopath/src/github.com/${TRAVIS_REPO_SLUG///swarm/} $HOME/gopath/src/github.com/docker
@@ -27,3 +30,6 @@ script:
   - GOOS=linux go build
   - go test -v -race ./...
   - script/coverage
+
+after_success:
+  - codecov
