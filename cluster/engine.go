@@ -16,6 +16,7 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/docker/docker/pkg/version"
 	engineapi "github.com/docker/engine-api/client"
+	"github.com/docker/engine-api/types"
 	engineapinop "github.com/docker/swarm/api/nopclient"
 	"github.com/samalba/dockerclient"
 	"github.com/samalba/dockerclient/nopclient"
@@ -468,12 +469,12 @@ func (e *Engine) updateSpecs() error {
 }
 
 // RemoveImage deletes an image from the engine.
-func (e *Engine) RemoveImage(image *Image, name string, force bool) ([]*dockerclient.ImageDelete, error) {
-	array, err := e.client.RemoveImage(name, force)
+func (e *Engine) RemoveImage(image *Image, name string, force bool) ([]types.ImageDelete, error) {
+	rmOpts := types.ImageRemoveOptions{name, force, true}
+	dels, err := e.apiClient.ImageRemove(rmOpts)
 	e.CheckConnectionErr(err)
 	e.RefreshImages()
-	return array, err
-
+	return dels, err
 }
 
 // RemoveNetwork removes a network from the engine.
