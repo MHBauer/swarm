@@ -4,12 +4,12 @@ import (
 	"strings"
 
 	"github.com/docker/docker/pkg/stringid"
-	"github.com/samalba/dockerclient"
+	"github.com/docker/engine-api/types"
 )
 
 // Network is exported
 type Network struct {
-	dockerclient.NetworkResource
+	types.NetworkResource
 
 	Engine *Engine
 }
