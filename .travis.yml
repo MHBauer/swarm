@@ -2,6 +2,13 @@ language: go
 
 go:
   - 1.5.3
+  - 1.6
+  - tip
+
+env:
+  - GOOS=darwin
+  - GOOS=windows
+  - GOOS=linux
 
 # let us have speedy Docker-based Travis workers
 sudo: false
@@ -18,10 +25,9 @@ install:
 script:
   - script/validate-gofmt
   - go vet ./...
-  - fgt golint ./...
+  - golint ./...
   # Lint shell files and make sure they are not space indented.
   - fgt find test/ -type f \( -name "*.sh" -or -name "*.bash" -or -name "*.bats" \) -exec grep -Hn -e "^ " {} \;
-  - GOOS=darwin go build
-  - GOOS=windows go build
-  - GOOS=linux go build
+  - go version
+  - go build
   - go test -v -race ./...
