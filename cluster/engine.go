@@ -479,7 +479,7 @@ func (e *Engine) RemoveImage(image *Image, name string, force bool) ([]types.Ima
 
 // RemoveNetwork removes a network from the engine.
 func (e *Engine) RemoveNetwork(network *Network) error {
-	err := e.client.RemoveNetwork(network.ID)
+	err := e.apiClient.NetworkRemove(network.ID)
 	e.CheckConnectionErr(err)
 	if err != nil {
 		return err
